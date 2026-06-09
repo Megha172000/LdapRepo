@@ -1,0 +1,94 @@
+{
+  "info": {
+    "_postman_id": "dc23f4bc-3673-4971-a186-295188e963fa",
+    "name": "Ldap",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31890380"
+  },
+  "item": [
+    {
+      "name": "create-user",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": " {\r\n    \"uid\": \"vishalk\",\r\n    \"firstName\": \"vishal\",\r\n    \"lastName\": \"jain\",\r\n    \"email\": \"vishal@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"mobileNumber\": \"9876835899\",\r\n    \"department\": \"Engineering\",\r\n    \"designation\": \"Backend Developer\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/create-user",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "create-user"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create-group",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"groupName\": \"It team\",\r\n  \"description\": \"It Team Group\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/groups/create-group",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "groups",
+            "create-group"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "add-user-to-group",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"vishalk\",\r\n  \"groupName\": \"developers\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/groups/add-user-to-group",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "groups",
+            "add-user-to-group"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
