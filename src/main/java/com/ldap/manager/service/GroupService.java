@@ -4,6 +4,7 @@ import com.ldap.manager.Dto.AddUserToGroupRequest;
 import com.ldap.manager.Dto.CreateGroupRequestDto;
 import com.ldap.manager.Dto.GroupDto;
 import com.ldap.manager.Dto.GroupResponseDto;
+import com.ldap.manager.repo.GroupAccessRequestRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ldap.core.LdapTemplate;
@@ -19,6 +20,9 @@ public class GroupService {
 
     @Autowired
     private LdapTemplate ldapTemplate;
+
+    @Autowired
+    private GroupAccessRequestRepository requestRepository;
 
     /**
      * Creates a new LDAP group under ou=groups
@@ -177,4 +181,57 @@ public class GroupService {
             );
         }
     }
+
+    public String requestAddUserToGroup(
+            AddUserToGroupRequest request
+    ) {
+
+
+        com.ldap.manager.entity.GroupAccessRequest accessRequest =
+                new com.ldap.manager.entity.GroupAccessRequest();
+
+
+        accessRequest.setUsername(
+                request.getUsername()
+        );
+
+
+        accessRequest.setGroupName(
+                request.getGroupName()
+        );
+
+        accessRequest.setStatus("PENDING");
+        requestRepository.save(accessRequest);
+        return "Group access request sent to admin";
+
+    }
+
+    public void approveRequest(Long id){
+
+
+        com.ldap.manager.entity.GroupAccessRequest request =
+                requestRepository.findById(id)
+                        .orElseThrow(
+                                () -> new RuntimeException(
+                                        "Request not found"
+                                )
+                        );
+
+
+        // existing LDAP logic
+        AddUserToGroupRequest ldapRequest =
+                new AddUserToGroupRequest();
+        ldapRequest.setUsername(
+                request.getUsername()
+        );
+        ldapRequest.setGroupName(
+                request.getGroupName()
+        );
+        addUserToGroup(ldapRequest);
+        request.setStatus("APPROVED");
+        requestRepository.save(request);
+
+    }
+
+
 }

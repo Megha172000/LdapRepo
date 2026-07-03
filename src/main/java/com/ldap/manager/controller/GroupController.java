@@ -36,7 +36,7 @@ public class GroupController {
     /**
      * Add existing LDAP user to an LDAP group
      */
-    @PostMapping("/add-user-to-group")
+   /* @PostMapping("/add-user-to-group")
     public GroupResponseDto addUserToGroup(
             @RequestBody AddUserToGroupRequest request
     ) {
@@ -46,5 +46,33 @@ public class GroupController {
                 request.getGroupName());
 
         return groupService.addUserToGroup(request);
+    }*/
+
+    @PostMapping("/add-user-to-group")
+    public String addUserToGroup(
+            @RequestBody AddUserToGroupRequest request
+    ) {
+
+        log.info(
+                "User [{}] requested access to group [{}]",
+                request.getUsername(),
+                request.getGroupName()
+        );
+
+
+        return groupService.requestAddUserToGroup(request);
+    }
+
+
+    @PutMapping("/approve/{id}")
+    public String approveRequest(
+            @PathVariable Long id
+    ){
+
+        groupService.approveRequest(id);
+
+
+        return "User added to group";
+
     }
 }
