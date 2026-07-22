@@ -1,13 +1,12 @@
 package com.ldap.manager.controller;
 
-import com.ldap.manager.Dto.AddUserToGroupRequest;
-import com.ldap.manager.Dto.CreateGroupRequestDto;
-import com.ldap.manager.Dto.GroupDto;
-import com.ldap.manager.Dto.GroupResponseDto;
+import com.ldap.manager.Dto.*;
 import com.ldap.manager.service.GroupService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/groups")
@@ -73,6 +72,23 @@ public class GroupController {
 
 
         return "User added to group";
+
+    }
+
+    @GetMapping("/get-all-groups")
+    public List<GroupDto> getAllGroups() {
+
+        log.info("Received request to fetch all LDAP groups");
+
+        return groupService.getAllGroups();
+    }
+
+    @GetMapping("/pending-requests")
+    public List<PendingRequestDto> getPendingRequests() {
+
+        log.info("Received request to fetch pending group requests");
+
+        return groupService.getPendingRequests();
 
     }
 }
